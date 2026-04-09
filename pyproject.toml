@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "equational-theories-stage1-judge"
+version = "0.1.0"
+description = "TRUE/FALSE verdict extractor and multi-provider LLM runner for equational-theory implication evaluation"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["llm", "evaluation", "grading", "verdict", "equational-theories", "implication"]
+dependencies = [
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.setuptools]
+py-modules = ["judge", "llm", "models", "prompt"]
