@@ -30,8 +30,7 @@
       "max_output_tokens": 8192,
       "use_seed": true,
       "seed": 0,
-      "reasoning_mode": "low",
-      "reasoning_effort": "low",
+      "reasoning_mode": "disabled",
       "temperature": 0.0
     }
   }

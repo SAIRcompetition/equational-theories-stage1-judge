@@ -81,7 +81,7 @@ Current official setup:
 |-------|------------------|-----------------------|-----------|------|
 | `gpt-oss-120b` | `openai/gpt-oss-120b` | `deepinfra/bf16` | low | `0` |
 | `llama-3-3-70b-instruct` | `meta-llama/llama-3.3-70b-instruct` | `deepinfra/fp8` | disabled | `0` |
-| `gemma-4-31b-it` | `google/gemma-4-31b-it` | `novita/bf16` | low | `0` |
+| `gemma-4-31b-it` | `google/gemma-4-31b-it` | `novita/bf16` | disabled | `0` |
 
 These three models are currently planned to serve as the final Stage 1
 evaluation models, with equal weight. The setup may still be adjusted based on

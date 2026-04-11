@@ -120,8 +120,8 @@ def test_openrouter_model_profile_reasoning_modes():
 
     gemma = _openrouter_model_profile("google/gemma-4-31b-it")
     assert gemma is not None
-    assert gemma.reasoning_mode == _ReasoningMode.LOW
-    assert gemma.reasoning_effort == "low"
+    assert gemma.reasoning_mode == _ReasoningMode.DISABLED
+    assert gemma.reasoning_effort is None
 
 
 def test_openrouter_model_profile_unknown_returns_none():

@@ -396,8 +396,7 @@ _OPENROUTER_PROFILES: dict[str, _ModelProfile] = {
     "qwen/qwen3.5-397b-a17b":                  _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
     "stepfun/step-3.5-flash":                  _ModelProfile(seed=None, reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
     # The three official Stage 1 evaluation models mirror evaluation_models.json.
-    # gemma-4 uses on/off reasoning; sending effort="low" enables thinking.
-    "google/gemma-4-31b-it":                   _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
+    "google/gemma-4-31b-it":                   _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
     "meta-llama/llama-3.3-70b-instruct":       _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
 }
 

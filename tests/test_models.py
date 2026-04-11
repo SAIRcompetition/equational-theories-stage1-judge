@@ -3,7 +3,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from models import _parse_provider_tag, resolve, ModelConfig
+from models import _parse_provider_tag, resolve, ModelConfig, load_models
 
 
 # ---------------------------------------------------------------------------
@@ -73,3 +73,12 @@ def test_resolve_reasoning_disabled():
     assert kwargs.reasoning_effort == "none"
     assert pconfig.preferred_providers == ["DeepInfra"]
     assert pconfig.quantizations == ["fp8"]
+
+
+def test_official_config_disables_reasoning_for_gemma():
+    models = load_models(os.path.join(os.path.dirname(os.path.dirname(__file__)), "evaluation_models.json"))
+    entry = models["gemma-4-31b-it"]
+    _, pconfig, kwargs = resolve(entry, api_keys=["sk-test"])
+    assert kwargs.reasoning_effort == "none"
+    assert pconfig.preferred_providers == ["Novita"]
+    assert pconfig.quantizations == ["bf16"]
