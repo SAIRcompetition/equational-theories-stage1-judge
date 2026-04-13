@@ -23,7 +23,7 @@ This module provides the bridge between a JSON model config file and the
     entry = ModelConfig(
         model_id   = "openai/gpt-oss-120b",
         provider   = "deepinfra/bf16",
-        max_output_tokens = 8192,
+        max_output_tokens = 16384,
         temperature       = 0.0,
         use_seed          = True,
         seed              = 0,
@@ -39,7 +39,8 @@ The top-level keys are:
 
 ``defaults``
     Fields applied to every model entry when the per-model value is absent.
-    Supported: ``allow_fallbacks`` and ``max_output_tokens_cap``.
+    Supported: ``allow_fallbacks``, ``max_output_tokens_cap``, and
+    ``reasoning_mode``.
 
 ``models``
     A dict keyed by short model aliases (e.g. ``"gpt-oss-120b"``).  Each
@@ -155,7 +156,7 @@ class ModelConfig:
     model_id: str
     provider: str
     allow_fallbacks: bool = False
-    max_output_tokens: int = 8192
+    max_output_tokens: int = 16384
     temperature: Optional[float] = 0.0
     use_seed: bool = False
     seed: Optional[int] = None
@@ -170,7 +171,7 @@ class ModelConfig:
 @dataclass
 class _Defaults:
     allow_fallbacks: bool = False
-    max_output_tokens_cap: int = 8192
+    max_output_tokens_cap: int = 16384
     reasoning_mode: str = "disabled"
 
 
@@ -228,7 +229,7 @@ def load_models(path: "str | Path" = "evaluation_models.json") -> dict[str, Mode
     raw_defaults = data.get("defaults", {})
     defaults = _Defaults(
         allow_fallbacks      = raw_defaults.get("allow_fallbacks",      False),
-        max_output_tokens_cap= raw_defaults.get("max_output_tokens_cap", 8192),
+        max_output_tokens_cap= raw_defaults.get("max_output_tokens_cap", 16384),
         reasoning_mode       = raw_defaults.get("reasoning_mode",       "disabled"),
     )
 

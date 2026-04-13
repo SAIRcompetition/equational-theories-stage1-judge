@@ -95,7 +95,7 @@ def test_openrouter_model_profile_covers_known_models():
             "google/gemma-4-31b-it",
             "meta-llama/llama-3.3-70b-instruct",
         }:
-            assert profile.max_output_tokens == 8192, f"unexpected cap for {model_id}"
+            assert profile.max_output_tokens == 16384, f"unexpected cap for {model_id}"
         else:
             assert profile.max_output_tokens == 32768, f"unexpected cap for {model_id}"
 
@@ -202,3 +202,25 @@ async def test_call_llm_kwargs_temperature_overrides_profile(monkeypatch):
     assert response.text == "VERDICT: TRUE"
     assert captured["temperature"] == 0.7
     assert captured["reasoning"] == {"effort": "none"}
+
+
+@pytest.mark.asyncio
+async def test_call_llm_uses_profile_cap_when_kwargs_max_tokens_is_unset(monkeypatch):
+    captured = {}
+
+    async def fake_call_once(client, url, api_key, model_id, body):
+        captured.update(body)
+        return LlmResponse(text="VERDICT: TRUE", finish_reason="stop")
+
+    monkeypatch.setattr("llm._call_once", fake_call_once)
+
+    response = await call_llm(
+        client=SimpleNamespace(),
+        provider_name="openrouter-main",
+        provider_config=ProviderConfig(api_keys=["sk-test"]),
+        model_id="openai/gpt-oss-120b",
+        prompt="hello",
+        kwargs=CompletionKwargs(),
+    )
+    assert response.text == "VERDICT: TRUE"
+    assert captured["max_tokens"] == 16384

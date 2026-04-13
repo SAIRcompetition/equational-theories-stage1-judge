@@ -72,10 +72,10 @@ All three official routes use:
 
 - strict provider pinning with `allow_fallbacks = false`
 - temperature `0.0`
-- max output tokens `8192`
+- max output tokens `16384`
 - seeded requests where supported
 
-Current official setup:
+Current planned setup:
 
 | Alias | OpenRouter model | Pinned provider route | Reasoning | Seed |
 |-------|------------------|-----------------------|-----------|------|
@@ -88,7 +88,7 @@ evaluation models, with equal weight. The setup may still be adjusted based on
 community feedback.
 
 In local smoke tests, you may pass `--max-tokens` to temporarily lower the cap
-for speed or cost. Official evaluation remains `8192`.
+for speed or cost. Official evaluation remains `16384`.
 
 ---
 

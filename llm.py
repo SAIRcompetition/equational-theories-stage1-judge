@@ -389,15 +389,15 @@ _OPENROUTER_PROFILES: dict[str, _ModelProfile] = {
     "openai/gpt-5.4":                          _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=None),
     "openai/gpt-5-mini":                       _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.LOW,      temperature=None, reasoning_effort="low"),
     "openai/gpt-5-nano":                       _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.LOW,      temperature=None, reasoning_effort="low"),
-    "openai/gpt-oss-120b":                     _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
+    "openai/gpt-oss-120b":                     _ModelProfile(max_output_tokens=16384, seed=0,    reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
     "x-ai/grok-4.1-fast":                      _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
     "moonshotai/kimi-k2.5":                    _ModelProfile(seed=None, reasoning_mode=_ReasoningMode.DISABLED, temperature=None),
     "minimax/minimax-m2.5":                    _ModelProfile(seed=None, reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
     "qwen/qwen3.5-397b-a17b":                  _ModelProfile(seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
     "stepfun/step-3.5-flash":                  _ModelProfile(seed=None, reasoning_mode=_ReasoningMode.LOW,      temperature=0.0,  reasoning_effort="low"),
     # The three official Stage 1 evaluation models mirror evaluation_models.json.
-    "google/gemma-4-31b-it":                   _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
-    "meta-llama/llama-3.3-70b-instruct":       _ModelProfile(max_output_tokens=8192, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
+    "google/gemma-4-31b-it":                   _ModelProfile(max_output_tokens=16384, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
+    "meta-llama/llama-3.3-70b-instruct":       _ModelProfile(max_output_tokens=16384, seed=0,    reasoning_mode=_ReasoningMode.DISABLED, temperature=0.0),
 }
 
 
@@ -649,7 +649,9 @@ async def call_llm(
     profile = _openrouter_model_profile(request_model_id)
     is_reasoning = False
 
-    max_tokens = kwargs.max_tokens or 8192
+    max_tokens = kwargs.max_tokens if kwargs.max_tokens is not None else (
+        profile.max_output_tokens if profile else 16384
+    )
     if profile:
         max_tokens = min(max_tokens, profile.max_output_tokens)
         if profile.seed is not None:
