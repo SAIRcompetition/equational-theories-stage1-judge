@@ -97,6 +97,7 @@ async def _run(args: argparse.Namespace) -> int:
                                 "tokens_in": response.tokens_in,
                                 "tokens_out": response.tokens_out,
                                 "actual_provider": response.actual_provider,
+                                **({} if args.hide_response else {"response_text": response.text}),
                             },
                             ensure_ascii=False,
                         ),
@@ -163,6 +164,11 @@ def _parser() -> argparse.ArgumentParser:
         type=float,
         default=240.0,
         help="Total timeout per model/problem call in seconds; set <=0 to disable",
+    )
+    parser.add_argument(
+        "--hide-response",
+        action="store_true",
+        help="Hide raw model output from per-problem JSON lines",
     )
     parser.add_argument("--api-key-env", default="OPENROUTER_API_KEY")
     return parser

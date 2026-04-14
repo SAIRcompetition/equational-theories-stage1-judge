@@ -118,9 +118,12 @@ python examples/run_smoke.py --limit 20 --models gpt-oss-120b llama-3-3-70b-inst
 Example output:
 
 ```json
-{"model":"gpt-oss-120b","problem_id":"hard3_0001","expected_answer":true,"correct":true,"reason":"Answered TRUE","finish_reason":"stop","tokens_in":174,"tokens_out":697,"actual_provider":"DeepInfra"}
+{"model":"gpt-oss-120b","problem_id":"hard3_0001","expected_answer":true,"correct":true,"reason":"Answered TRUE","finish_reason":"stop","tokens_in":174,"tokens_out":697,"actual_provider":"DeepInfra","response_text":"VERDICT: TRUE\nREASONING: ..."}
 {"summary":{"total_calls":20,"parseable":20,"correct":9}}
 ```
+
+The runner prints the raw model output in `response_text` by default. Use
+`--hide-response` if you want a lighter per-problem JSON format.
 
 ### 3. Check the important fields
 

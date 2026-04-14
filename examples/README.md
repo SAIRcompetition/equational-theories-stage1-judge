@@ -15,7 +15,8 @@ this repository substitutes only `{{equation1}}` / `{{ equation1 }}` and
   the first 10 TRUE problems and the first 10 FALSE problems, preserving the
   original `hard3` order.
 - `run_smoke.py` runs the prompt and problems through the configured
-  OpenRouter models and grades each response.
+  OpenRouter models, prints the raw model output by default, and grades each
+  response.
 
 ## Run
 
@@ -31,4 +32,10 @@ If a provider is slow, you can cap total wall-clock time per call:
 
 ```sh
 python examples/run_smoke.py --limit 2 --models gpt-oss-120b --call-timeout 60
+```
+
+If you want a lighter output format, you can hide the raw model response:
+
+```sh
+python examples/run_smoke.py --limit 2 --models gpt-oss-120b --hide-response
 ```
