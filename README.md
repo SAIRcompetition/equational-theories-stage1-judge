@@ -95,6 +95,11 @@ Organizers also plan to run an additional `16384`-token evaluation and display
 those results in a separate leaderboard. The primary Stage 1 leaderboard
 remains based on the `8192` setting in this repository.
 
+If a provider route for one of the planned evaluation models remains unstable
+by the end of Stage 1, organizers may use a SAIR-hosted serving setup for that
+same model and fixed configuration in final evaluation, while ensuring fairness
+of the evaluation.
+
 ---
 
 ## Local Workflow
