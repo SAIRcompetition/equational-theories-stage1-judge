@@ -72,7 +72,7 @@ All three official routes use:
 
 - strict provider pinning with `allow_fallbacks = false`
 - temperature `0.0`
-- max output tokens `16384`
+- max output tokens `8192`
 - seeded requests where supported
 
 Current planned setup:
@@ -88,7 +88,12 @@ evaluation models, with equal weight. The setup may still be adjusted based on
 community feedback.
 
 In local smoke tests, you may pass `--max-tokens` to temporarily lower the cap
-for speed or cost. Official evaluation remains `16384`.
+for speed or cost. The default local testing setup in this repository remains
+`8192`.
+
+Organizers also plan to run an additional `16384`-token evaluation and display
+those results in a separate leaderboard. The primary Stage 1 leaderboard
+remains based on the `8192` setting in this repository.
 
 ---
 

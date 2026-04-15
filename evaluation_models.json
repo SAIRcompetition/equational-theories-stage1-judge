@@ -1,14 +1,14 @@
 {
   "defaults": {
     "allow_fallbacks": false,
-    "max_output_tokens_cap": 16384
+    "max_output_tokens_cap": 8192
   },
 
   "models": {
     "gpt-oss-120b": {
       "model": "openai/gpt-oss-120b",
       "provider": "deepinfra/bf16",
-      "max_output_tokens": 16384,
+      "max_output_tokens": 8192,
       "use_seed": true,
       "seed": 0,
       "reasoning_mode": "low",
@@ -18,7 +18,7 @@
     "llama-3-3-70b-instruct": {
       "model": "meta-llama/llama-3.3-70b-instruct",
       "provider": "deepinfra/fp8",
-      "max_output_tokens": 16384,
+      "max_output_tokens": 8192,
       "use_seed": true,
       "seed": 0,
       "reasoning_mode": "disabled",
@@ -27,7 +27,7 @@
     "gemma-4-31b-it": {
       "model": "google/gemma-4-31b-it",
       "provider": "novita/bf16",
-      "max_output_tokens": 16384,
+      "max_output_tokens": 8192,
       "use_seed": true,
       "seed": 0,
       "reasoning_mode": "disabled",
