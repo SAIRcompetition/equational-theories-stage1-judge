@@ -505,11 +505,11 @@ async def _call_once(
                 data = resp.json()
             except Exception as e:
                 preview = _truncate(resp.text)
-                _logger.error(
-                    "Response deserialization failed for %s: %s\nRaw body: %s",
+                _logger.warning(
+                    "Response deserialization failed for %s (transient, will retry): %s\nRaw body: %s",
                     model_id, e, preview,
                 )
-                raise _Permanent(ApiError(status, f"deserialization error: {e}"))
+                raise _Transient(ApiError(status, f"deserialization error: {e}"))
 
             choices = data.get("choices") or []
             choice = choices[0] if choices else None

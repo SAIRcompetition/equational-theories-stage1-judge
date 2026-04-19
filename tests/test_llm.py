@@ -182,6 +182,55 @@ async def test_call_once_normalizes_list_message_content():
 
 
 @pytest.mark.asyncio
+async def test_call_once_retries_malformed_2xx_response_body():
+    class MalformedResponse:
+        status_code = 200
+        text = "not-json"
+
+        def json(self):
+            raise ValueError("bad json")
+
+    class ValidResponse:
+        status_code = 200
+        text = json.dumps(
+            {
+                "choices": [
+                    {
+                        "message": {"content": "VERDICT: TRUE"},
+                        "finish_reason": "stop",
+                    }
+                ],
+                "usage": {"prompt_tokens": 1, "completion_tokens": 2},
+                "provider": "DeepInfra",
+            }
+        )
+
+        def json(self):
+            return json.loads(self.text)
+
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+
+        async def post(self, *args, **kwargs):
+            self.calls += 1
+            return MalformedResponse() if self.calls == 1 else ValidResponse()
+
+    client = FakeClient()
+    response = await _call_once(
+        client,
+        url="https://openrouter.ai/api/v1/chat/completions",
+        api_key="sk-test",
+        model_id="openai/gpt-oss-120b",
+        body={},
+    )
+
+    assert client.calls == 2
+    assert response.text == "VERDICT: TRUE"
+    assert response.actual_provider == "DeepInfra"
+
+
+@pytest.mark.asyncio
 async def test_call_llm_kwargs_temperature_overrides_profile(monkeypatch):
     captured = {}
 
